@@ -6,10 +6,10 @@ terraform {
   }
 
   backend "remote" {
-    organization = "jared-holgate-hashicorp"
+    organization = "jaredfholgate-hashicorp"
 
     workspaces {
-      prefix = "azure-vault-"
+      prefix = "jared-holgate-demo-one-"
     }
   }
 }
