@@ -60,13 +60,15 @@ jobs:
     environment: dev
     if: github.ref == 'refs/heads/main'
     env:
-      ENVIRONMENT: ${{ toJSON(job) }}
+      ENVIRONMENT: dev
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         
       - name: Terraform Varaibles
         id: variables
+        env:
+          ENVIRONMENT: ${{ toJSON(job) }}
         run: | 
           echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
