@@ -60,7 +60,7 @@ jobs:
     environment: dev
     if: github.ref == 'refs/heads/main'
     env:
-      ENVIRONMENT: dev
+      ENVIRONMENT: ${{ jobs[github.job].environment.url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -68,10 +68,10 @@ jobs:
       - name: Terraform Varaibles
         id: variables
         run: | 
-          echo 'application_environment="${{ jobs[github.job].environment.name }}"' >> ${{ jobs[github.job].environment.name }}.auto.tfvars
-          echo 'deployment_version="${{ env.VERSION }}"' >> ${{ jobs[github.job].environment.name }}.auto.tfvars
-          echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ jobs[github.job].environment.name }}.auto.tfvars
-          echo '' >> ${{ jobs[github.job].environment.name }}.auto.tfvars
+          echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
 
       - name: Dynamically set RUN_DATE environment variable
         run: echo "RUN_DATE=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
