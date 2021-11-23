@@ -48,6 +48,7 @@ jobs:
           echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'resource_group_name_prefix="jared-holgate-demo-one-"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
         
       - name: Terraform Plan
@@ -87,6 +88,7 @@ jobs:
           echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'resource_group_name_prefix="jared-holgate-demo-one-"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
       - name: Terraform Apply
         run: terraform apply -auto-approve
@@ -125,6 +127,7 @@ jobs:
           echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'resource_group_name_prefix="jared-holgate-demo-one-"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
       - name: Terraform Apply
         run: terraform apply -auto-approve
@@ -163,6 +166,7 @@ jobs:
           echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'resource_group_name_prefix="jared-holgate-demo-one-"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
       - name: Terraform Apply
         run: terraform apply
