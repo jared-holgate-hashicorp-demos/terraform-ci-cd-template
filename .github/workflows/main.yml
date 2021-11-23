@@ -60,7 +60,7 @@ jobs:
     environment: dev
     if: github.ref == 'refs/heads/main'
     env:
-      ENVIRONMENT: ${{ jobs[github.job].environment.url }}
+      ENVIRONMENT: ${{ job }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
