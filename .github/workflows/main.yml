@@ -130,7 +130,7 @@ jobs:
       - name: Terraform Varaibles
         id: variables
         run: | 
-          echo 'application_environment="${{ jobs.<job_id>.environment }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
