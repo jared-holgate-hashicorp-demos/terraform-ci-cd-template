@@ -7,7 +7,9 @@ on:
   pull_request:
     branches:
       - main
-      
+env:
+  VERSION: 1.0.0.${{ env.GITHUB_RUN_ID }}
+  
 jobs:
   pull-request-checks:
     name: "Pull Request Checks"
@@ -32,9 +34,9 @@ jobs:
         id: workspace
         run: echo "TF_WORKSPACE=${{ env.ENVIRONMENT }}" >> $GITHUB_ENV
 
-      #- name: Terraform Format
-      #  id: fmt
-      #  run: terraform fmt -check
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check
 
       - name: Terraform Init
         id: init
@@ -44,7 +46,7 @@ jobs:
         id: variables
         run: | 
           echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'deployment_version="1.0.0.0"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
         
@@ -63,6 +65,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         
+      - name: Terraform Varaibles
+        id: variables
+        run: | 
+          echo 'application_environment="${{ jobs[github.job].environment.name }}"' >> ${{ jobs[github.job].environment.name }}.auto.tfvars
+          echo 'deployment_version="${{ env.VERSION }}"' >> ${{ jobs[github.job].environment.name }}.auto.tfvars
+          echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ jobs[github.job].environment.name }}.auto.tfvars
+          echo '' >> ${{ jobs[github.job].environment.name }}.auto.tfvars
+
       - name: Dynamically set RUN_DATE environment variable
         run: echo "RUN_DATE=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
 
@@ -83,7 +93,7 @@ jobs:
         id: variables
         run: | 
           echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'deployment_version="1.0.0.0"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
       - name: Terraform Apply
@@ -120,8 +130,8 @@ jobs:
       - name: Terraform Varaibles
         id: variables
         run: | 
-          echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'deployment_version="1.0.0.0"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'application_environment="${{ jobs.<job_id>.environment }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
       - name: Terraform Apply
@@ -159,7 +169,7 @@ jobs:
         id: variables
         run: | 
           echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'deployment_version="1.0.0.0"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
       - name: Terraform Apply
