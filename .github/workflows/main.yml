@@ -68,7 +68,7 @@ jobs:
       - name: Terraform Varaibles
         id: variables_test
         env:
-          ENVIRONMENT: ${{ job.environment }}
+          ENVIRONMENT: ${{ jobs[github.job].environment.url }}
         run: | 
           echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
