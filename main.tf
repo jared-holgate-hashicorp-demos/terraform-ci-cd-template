@@ -23,6 +23,7 @@ module "stack_azure_virtual_machine_example" {
   resource_group_name          = format("%s%s", var.resource_group_name_prefix, var.deployment_environment)
   primary_cluster_size         = 3 
   secondary_cluster_size       = 3
+  include_demo_vm              = false
   tags = {
     environment      = var.deployment_environment
     application-name = "Demonstration"
