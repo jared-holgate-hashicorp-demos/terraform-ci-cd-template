@@ -60,7 +60,7 @@ jobs:
     name: "Deploy to dev"
     runs-on: ubuntu-latest
     environment: dev
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), 'Initial commit')
     env:
       ENVIRONMENT: dev
     steps:
