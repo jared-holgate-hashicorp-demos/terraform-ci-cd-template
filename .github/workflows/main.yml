@@ -108,8 +108,8 @@ jobs:
           echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'resource_group_name_prefix="jared-holgate-demo-one-"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'primary_cliuster_size=4' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'secondary_cliuster_size=2' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'primary_cluster_size=4' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'secondary_cluster_size=2' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           
       - name: Terraform Apply
@@ -150,8 +150,8 @@ jobs:
           echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'resource_group_name_prefix="jared-holgate-demo-one-"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'primary_cliuster_size=6' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'secondary_cliuster_size=4' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'primary_cluster_size=6' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'secondary_cluster_size=4' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           
       - name: Terraform Apply
@@ -192,8 +192,8 @@ jobs:
           echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'resource_group_name_prefix="jared-holgate-demo-one-"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'primary_cliuster_size=12' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'secondary_cliuster_size=8' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'primary_cluster_size=12' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'secondary_cluster_size=8' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           
       - name: Terraform Apply
