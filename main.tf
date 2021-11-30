@@ -21,8 +21,8 @@ provider "azurerm" {
 module "stack_azure_virtual_machine_example" {
   source                       = "app.terraform.io/jaredfholgate-hashicorp/stack_azure_virtual_machine_example/jaredholgate"
   resource_group_name          = format("%s%s", var.resource_group_name_prefix, var.deployment_environment)
-  primary_cluster_size         = 3 
-  secondary_cluster_size       = 3
+  primary_cluster_size         = var.primary_cluster_size 
+  secondary_cluster_size       = var.secondary_cluster_size
   include_demo_vm              = false
   tags = {
     environment      = var.deployment_environment
