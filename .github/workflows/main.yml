@@ -38,6 +38,10 @@ jobs:
       - name: Terraform Format
         id: fmt
         run: terraform fmt -check
+        
+      - name: Terraform Lint / Static Analysis
+        id: lint
+        run: some_analysis_exe
 
       - name: Terraform Init
         id: init
@@ -54,7 +58,21 @@ jobs:
         
       - name: Terraform Plan
         id: plan
-        run: terraform plan
+        run: terraform plan -out=plan.tfplan
+        
+      - name: Terraform Convert Plan to json
+        id: json
+        run: terraform show -json plan.tfplan > plan.json
+        
+      - name: Analyse / Test Plan
+        id: analyse
+        run: some_analysis_exe plan.json
+        
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        
+      - name: Run Functional Tests
+        run: some_tests_exe
     
   deploy-to-dev:
     name: "Deploy to dev"
@@ -91,6 +109,7 @@ jobs:
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'resource_group_name_prefix="jared-holgate-demo-one-"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          
       - name: Terraform Apply
         run: terraform apply -auto-approve
       
@@ -130,6 +149,7 @@ jobs:
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'resource_group_name_prefix="jared-holgate-demo-one-"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
@@ -169,5 +189,6 @@ jobs:
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'resource_group_name_prefix="jared-holgate-demo-one-"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          
       - name: Terraform Apply
         run: terraform apply
