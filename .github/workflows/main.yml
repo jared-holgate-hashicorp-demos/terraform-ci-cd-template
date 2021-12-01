@@ -41,7 +41,7 @@ jobs:
         
       - name: Terraform Lint / Static Analysis
         id: lint
-        run: some_analysis_exe
+        run: echo "Run some analysis here"
 
       - name: Terraform Init
         id: init
@@ -66,13 +66,13 @@ jobs:
         
       - name: Analyse / Test Plan
         id: analyse
-        run: some_analysis_exe plan.json
+        run: echo "Run some analysis here"
         
       - name: Terraform Apply
         run: terraform apply -auto-approve
         
       - name: Run Functional Tests
-        run: some_tests_exe
+        run: echo "Run some tests against the infra here"
     
   deploy-to-dev:
     name: "Deploy to dev"
