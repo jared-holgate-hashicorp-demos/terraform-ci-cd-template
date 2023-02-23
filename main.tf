@@ -5,12 +5,8 @@ terraform {
     }
   }
 
-  backend "remote" {
-    organization = "jaredfholgate-hashicorp"
-
-    workspaces {
-      prefix = "jared-holgate-demo-one-"
-    }
+  cloud {
+    organization = "jared-holgate-microsoft"
   }
 }
 
