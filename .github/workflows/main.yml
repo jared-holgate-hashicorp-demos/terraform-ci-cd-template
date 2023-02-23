@@ -17,8 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/main'
     environment: dev
-    env:
-      ENVIRONMENT: dev
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -33,7 +31,7 @@ jobs:
           
       - name: Terraform Workspace
         id: workspace
-        run: echo "TF_WORKSPACE=${{ env.ENVIRONMENT }}" >> $GITHUB_ENV
+        run: echo "TF_WORKSPACE=${{ secret.TF_NAME }}" >> $GITHUB_ENV
 
       - name: Terraform Format
         id: fmt
@@ -50,10 +48,9 @@ jobs:
       - name: Terraform Varaibles
         id: variables
         run: | 
-          echo 'deployment_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'resource_group_name_prefix="jared-holgate-demo-one-"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_version="${{ env.VERSION }}"' >> terraform.tfvars
+          echo 'deployment_date="${{ env.RUN_DATE }}"' >> terraform.tfvars
+          echo 'resource_group_name="${{ secret.TF_NAME }}"' >> terraform.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
         
       - name: Terraform Plan
@@ -79,8 +76,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev
     if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), 'Initial commit') == false
-    env:
-      ENVIRONMENT: dev
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -95,7 +90,7 @@ jobs:
           
       - name: Terraform Workspace
         id: workspace
-        run: echo "TF_WORKSPACE=${{ env.ENVIRONMENT }}" >> $GITHUB_ENV
+        run: echo "TF_WORKSPACE=${{ secret.TF_NAME }}" >> $GITHUB_ENV
 
       - name: Terraform Init
         id: init
@@ -104,13 +99,12 @@ jobs:
       - name: Terraform Varaibles
         id: variables
         run: | 
-          echo 'deployment_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'resource_group_name_prefix="jared-holgate-demo-one-"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'primary_cluster_size=4' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'secondary_cluster_size=2' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_version="${{ env.VERSION }}"' >> terraform.tfvars
+          echo 'deployment_date="${{ env.RUN_DATE }}"' >> terraform.tfvars
+          echo 'resource_group_name="${{ secret.TF_NAME }}"' >> terraform.tfvars
+          echo 'primary_cluster_size=4' >> terraform.tfvars
+          echo 'secondary_cluster_size=2' >> terraform.tfvars
+          echo '' >> terraform.tfvars
           
       - name: Terraform Apply
         run: terraform apply -auto-approve
@@ -121,8 +115,6 @@ jobs:
     environment: test
     if: github.ref == 'refs/heads/main'
     needs: deploy-to-dev
-    env:
-      ENVIRONMENT: test
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -137,7 +129,7 @@ jobs:
           
       - name: Terraform Workspace
         id: workspace
-        run: echo "TF_WORKSPACE=${{ env.ENVIRONMENT }}" >> $GITHUB_ENV
+        run: echo "TF_WORKSPACE=${{ secret.TF_NAME }}" >> $GITHUB_ENV
 
       - name: Terraform Init
         id: init
@@ -146,13 +138,12 @@ jobs:
       - name: Terraform Varaibles
         id: variables
         run: | 
-          echo 'deployment_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'resource_group_name_prefix="jared-holgate-demo-one-"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'primary_cluster_size=6' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'secondary_cluster_size=4' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_version="${{ env.VERSION }}"' >> terraform.tfvars
+          echo 'deployment_date="${{ env.RUN_DATE }}"' >> terraform.tfvars
+          echo 'resource_group_name="${{ secret.TF_NAME }}"' >> terraform.tfvars
+          echo 'primary_cluster_size=6' >> terraform.tfvars
+          echo 'secondary_cluster_size=4' >> terraform.tfvars
+          echo '' >> terraform.tfvars
           
       - name: Terraform Apply
         run: terraform apply -auto-approve
@@ -163,8 +154,6 @@ jobs:
     environment: prod
     if: github.ref == 'refs/heads/main'
     needs: deploy-to-test
-    env:
-      ENVIRONMENT: prod
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -179,7 +168,7 @@ jobs:
           
       - name: Terraform Workspace
         id: workspace
-        run: echo "TF_WORKSPACE=${{ env.ENVIRONMENT }}" >> $GITHUB_ENV
+        run: echo "TF_WORKSPACE=${{ secret.TF_NAME }}" >> $GITHUB_ENV
 
       - name: Terraform Init
         id: init
@@ -188,13 +177,12 @@ jobs:
       - name: Terraform Variables
         id: variables
         run: | 
-          echo 'deployment_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'deployment_version="${{ env.VERSION }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'resource_group_name_prefix="jared-holgate-demo-one-"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'primary_cluster_size=12' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'secondary_cluster_size=8' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_version="${{ env.VERSION }}"' >> terraform.tfvars
+          echo 'deployment_date="${{ env.RUN_DATE }}"' >> terraform.tfvars
+          echo 'resource_group_name="${{ secret.TF_NAME }}"' >> terraform.tfvars
+          echo 'primary_cluster_size=12' >> terraform.tfvars
+          echo 'secondary_cluster_size=8' >> terraform.tfvars
+          echo '' >> terraform.tfvars
           
       - name: Terraform Apply
         run: terraform apply
