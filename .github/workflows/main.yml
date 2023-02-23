@@ -31,7 +31,7 @@ jobs:
           
       - name: Terraform Workspace
         id: workspace
-        run: echo "TF_WORKSPACE=${{ secret.TF_NAME }}" >> $GITHUB_ENV
+        run: echo "TF_WORKSPACE=${{ secrets.TF_NAME }}" >> $GITHUB_ENV
 
       - name: Terraform Format
         id: fmt
@@ -50,7 +50,7 @@ jobs:
         run: | 
           echo 'deployment_version="${{ env.VERSION }}"' >> terraform.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> terraform.tfvars
-          echo 'resource_group_name="${{ secret.TF_NAME }}"' >> terraform.tfvars
+          echo 'resource_group_name="${{ secrets.TF_NAME }}"' >> terraform.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
         
       - name: Terraform Plan
@@ -90,7 +90,7 @@ jobs:
           
       - name: Terraform Workspace
         id: workspace
-        run: echo "TF_WORKSPACE=${{ secret.TF_NAME }}" >> $GITHUB_ENV
+        run: echo "TF_WORKSPACE=${{ secrets.TF_NAME }}" >> $GITHUB_ENV
 
       - name: Terraform Init
         id: init
@@ -101,7 +101,7 @@ jobs:
         run: | 
           echo 'deployment_version="${{ env.VERSION }}"' >> terraform.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> terraform.tfvars
-          echo 'resource_group_name="${{ secret.TF_NAME }}"' >> terraform.tfvars
+          echo 'resource_group_name="${{ secrets.TF_NAME }}"' >> terraform.tfvars
           echo 'primary_cluster_size=4' >> terraform.tfvars
           echo 'secondary_cluster_size=2' >> terraform.tfvars
           echo '' >> terraform.tfvars
@@ -129,7 +129,7 @@ jobs:
           
       - name: Terraform Workspace
         id: workspace
-        run: echo "TF_WORKSPACE=${{ secret.TF_NAME }}" >> $GITHUB_ENV
+        run: echo "TF_WORKSPACE=${{ secrets.TF_NAME }}" >> $GITHUB_ENV
 
       - name: Terraform Init
         id: init
@@ -140,7 +140,7 @@ jobs:
         run: | 
           echo 'deployment_version="${{ env.VERSION }}"' >> terraform.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> terraform.tfvars
-          echo 'resource_group_name="${{ secret.TF_NAME }}"' >> terraform.tfvars
+          echo 'resource_group_name="${{ secrets.TF_NAME }}"' >> terraform.tfvars
           echo 'primary_cluster_size=6' >> terraform.tfvars
           echo 'secondary_cluster_size=4' >> terraform.tfvars
           echo '' >> terraform.tfvars
@@ -168,7 +168,7 @@ jobs:
           
       - name: Terraform Workspace
         id: workspace
-        run: echo "TF_WORKSPACE=${{ secret.TF_NAME }}" >> $GITHUB_ENV
+        run: echo "TF_WORKSPACE=${{ secrets.TF_NAME }}" >> $GITHUB_ENV
 
       - name: Terraform Init
         id: init
@@ -179,7 +179,7 @@ jobs:
         run: | 
           echo 'deployment_version="${{ env.VERSION }}"' >> terraform.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> terraform.tfvars
-          echo 'resource_group_name="${{ secret.TF_NAME }}"' >> terraform.tfvars
+          echo 'resource_group_name="${{ secrets.TF_NAME }}"' >> terraform.tfvars
           echo 'primary_cluster_size=12' >> terraform.tfvars
           echo 'secondary_cluster_size=8' >> terraform.tfvars
           echo '' >> terraform.tfvars
