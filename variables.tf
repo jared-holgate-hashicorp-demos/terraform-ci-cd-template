@@ -1,8 +1,4 @@
-variable "resource_group_name_prefix" {
-  type = string
-}
-
-variable "deployment_environment" {
+variable "resource_group_name" {
   type = string
 }
 
